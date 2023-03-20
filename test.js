@@ -44,9 +44,9 @@ var ds18b20 = require("ds18b20");
     if (ids) {
       for (let index = 0; index < ids.length; index++) {
         const id = ids[index];
-        ds18b20.temperatureSync((id, {}) => {
-          console.log(data);
-        });
+        console.log(id);
+        const temp = ds18b20.temperatureSync(id, {});
+        console.log(temp);
       }
     }
   } catch (e) {
