@@ -42,7 +42,9 @@ var ds18b20 = require("ds18b20");
     });
 
     if (ids) {
-      ids.forEach((x) => console.log(ds18b20.temperatureSync(x)));
+      ids.forEach((x) => ds18b20.temperatureSync((x, {}) => {
+        console.log(data);
+      }));
     }
   } catch (e) {
     console.error(`Error: ${e}`);
