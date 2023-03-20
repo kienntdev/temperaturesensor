@@ -1,4 +1,4 @@
-var ds18b20 = require('ds18b20');
+var ds18b20 = require("ds18b20");
 
 // const fs = require("fs");
 
@@ -35,7 +35,7 @@ var ds18b20 = require('ds18b20');
 (async function () {
   try {
     let ids = ds18b20.sensors();
-    ids.forEach((x) => ds18b20.temperatureSync(x));
+    ids.forEach((x) => console.log(ds18b20.temperatureSync(x)));
   } catch (e) {
     console.error(`Error: ${e}`);
   }
