@@ -34,21 +34,16 @@ var ds18b20 = require("ds18b20");
 
 (async function () {
   try {
-    let ids = ds18b20.sensors((x, ids) => {
+    let ids = await ds18b20.sensors((x, ids) => {
       if (x == null) {
         console.log(ids);
-        return ids;
+        ids.forEach(x => {
+          console.log(x);
+          const temp = ds18b20.temperatureSync(x, {});
+          console.log(temp);
+        });
       }
     });
-
-    if (ids) {
-      for (let index = 0; index < ids.length; index++) {
-        const id = ids[index];
-        console.log(id);
-        const temp = ds18b20.temperatureSync(id, {});
-        console.log(temp);
-      }
-    }
   } catch (e) {
     console.error(`Error: ${e}`);
   }
