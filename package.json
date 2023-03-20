@@ -1,0 +1,14 @@
+{
+  "name": "temperaturesensor",
+  "version": "1.0.0",
+  "description": "create temperature sensor project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ds18b20": "^0.1.0"
+  }
+}
