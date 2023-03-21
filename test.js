@@ -30,7 +30,7 @@ function getDateTime() {
     try {
       const sensors = await getSensors();
       if (sensors.length > 0) {
-        const temp = ds18b20.temperatureSync(i, {});
+        const temp = ds18b20.temperatureSync(sensors[0], {});
         console.log(`Time: ${getDateTime()} - ${temp}`);
       }
     } catch (e) {
