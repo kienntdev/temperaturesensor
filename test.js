@@ -1,4 +1,4 @@
-import { sensors as _sensors, temperatureSync } from "ds18b20";
+var ds18b20 = require("ds18b20");
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -9,12 +9,12 @@ function sleep(ms) {
 (async function () {
   do {
     try {
-      _sensors((err, sensors) => {
+      ds18b20.sensors((err, sensors) => {
         if (err == null && sensors !== undefined && sensors.length > 0) {
           console.log(sensors);
           sensors.forEach((i) => {
             console.log(i);
-            const temp = temperatureSync(i, {});
+            const temp = ds18b20.temperatureSync(i, {});
             console.log(temp);
           });
         } else {
