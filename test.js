@@ -1,50 +1,29 @@
-var ds18b20 = require("ds18b20");
+import { sensors as _sensors, temperatureSync } from "ds18b20";
 
-// const fs = require("fs");
-
-// const HWSENSORPREFIX = "/sys/bus/w1/devices/";
-// const HWMON = "hwmon";
-
-// async function getSensors() {
-//   let sensors = [];
-//   const dir = await fs.promises.opendir(`${HWSENSORPREFIX}`);
-//   for await (const dirent of dir) {
-//     if (dirent.name.slice(0, 3) == "28-") {
-//       sensors.push(dirent.name);
-//     }
-//   }
-//   return sensors;
-// }
-
-// // Print temperature reading from a given 1-Wire sensor
-// async function printTemp(sensor) {
-//   const dir = await fs.promises.opendir(`${HWSENSORPREFIX}/${sensor}/${HWMON}`);
-//   for await (const dirent of dir) {
-//     if (dirent.name.slice(0, 5) == HWMON) {
-//       let temp =
-//         parseFloat(
-//           await fs.promises.readFile(
-//             `${HWSENSORPREFIX}/${sensor}/${HWMON}/${dirent.name}/temp1_input`
-//           )
-//         ) / 1000.0;
-//       console.log(`${dirent.name} (${sensor}): ${temp}`);
-//     }
-//   }
-// }
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 (async function () {
-  try {
-    let ids = await ds18b20.sensors((x, ids) => {
-      if (x == null) {
-        console.log(ids);
-        ids.forEach(x => {
-          console.log(x);
-          const temp = ds18b20.temperatureSync(x, {});
-          console.log(temp);
-        });
-      }
-    });
-  } catch (e) {
-    console.error(`Error: ${e}`);
-  }
+  do {
+    try {
+      _sensors((err, sensors) => {
+        if (err == null && sensors !== undefined && sensors.length > 0) {
+          console.log(sensors);
+          sensors.forEach((i) => {
+            console.log(i);
+            const temp = temperatureSync(i, {});
+            console.log(temp);
+          });
+        } else {
+          console.error(`Error: ${err}`);
+        }
+      });
+    } catch (e) {
+      console.error(`Error: ${e}`);
+    }
+    await sleep(10000);
+  } while (true);
 })();
